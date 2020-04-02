@@ -4,13 +4,34 @@ from typing import List, Dict
 
 from Enums import PatientCase, PatientCategory, Country
 
-FileInformation = namedtuple('DataInformation', ['http_file', 'case', 'dic_category'])
+
+class FileInformation:
+    """
+    Each case (see PatientCase) will be described with one FileInformation.
+    For One country, you will get a list of FileInformation.
+    You can have several files with the same PatientCase !
+    """
+
+    def __init__(self, http_file: str, case: PatientCase, dic_category: Dict[PatientCategory, str]):
+
+        # contains the http link to the file.
+        self.http_file: str = http_file
+
+        # contains the case (all of them should be defined as a list of FileInformation)
+        self.case: PatientCase = case
+
+        # contains the category contained in this file for this case (you can have several files with the same case,
+        # but several different categories). This has been done to keep data anonymous.
+        self.dic_category: Dict[PatientCategory, str] = dic_category
 
 
 class DataSource:
+    """
+    This class contains all the information for each country to access data and to map the fields of the raw data
+    to universal categories.
+    """
 
-
-    @classmethod
+    @staticmethod
     def get_info_for_country(country: Country) -> List[FileInformation]:
         """
         This method allows to get all the informations needed to access the data and map data to the fields
@@ -79,7 +100,8 @@ class DataSource:
                                         PatientCategory.date: 'DATE',
                                         PatientCategory.geo_level_1: 'REGION',
                                         PatientCategory.sex: 'SEX',
-                                        PatientCategory.age: 'AGEGROUP'
+                                        PatientCategory.age: 'AGEGROUP',
+                                        PatientCategory.total: 'DEATHS'
                                 }
                         )
                 ]
