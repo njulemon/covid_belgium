@@ -10,11 +10,21 @@ class PlotPattern(Enum):
     """
     This class should be thought as all available plots.
     It defines the variable you want to plot (dead, positive tested, ...) and optionally a category if you want to
-    split the data in this category.
+    split the data into this category.
     """
     death_country = auto()
     death_age = auto()
     death_sex = auto()
+    death_region = auto()
+
+    positive_country = auto()
+    positive_age = auto()
+    positive_sex = auto()
+    positive_region = auto()
+
+    hospitalization_country = auto()
+    hospitalization_age = auto()
+    hospitalization_region = auto()
 
     def get_pattern(self):
         """
@@ -24,7 +34,17 @@ class PlotPattern(Enum):
         dic = {
                 self.death_country: [PatientCase.death, None],
                 self.death_age: [PatientCase.death, PatientCategory.age],
-                self.death_sex: [PatientCase.death, PatientCategory.sex]
+                self.death_sex: [PatientCase.death, PatientCategory.sex],
+                self.death_region: [PatientCase.death, PatientCategory.geo_level_1],
+
+                self.positive_country: [PatientCase.positive_to_covid, None],
+                self.positive_age: [PatientCase.positive_to_covid, PatientCategory.age],
+                self.positive_sex: [PatientCase.positive_to_covid, PatientCategory.sex],
+                self.positive_region: [PatientCase.positive_to_covid, PatientCategory.geo_level_1],
+
+                self.hospitalization_country: [PatientCase.hospitalization, None],
+                self.hospitalization_age: [PatientCase.hospitalization, PatientCategory.age],
+                self.hospitalization_region: [PatientCase.hospitalization, PatientCategory.geo_level_1]
         }
 
         return dic[self]
