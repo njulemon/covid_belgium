@@ -49,7 +49,8 @@ class DataSource:
                                         PatientCategory.geo_level_1: 'REGION',
                                         PatientCategory.geo_level_2: 'PROVINCE',
                                         PatientCategory.age: 'AGEGROUP',
-                                        PatientCategory.sex: 'SEX'
+                                        PatientCategory.sex: 'SEX',
+                                        PatientCategory.total: 'CASES'
                                 }
                         ),
                         FileInformation(
@@ -60,7 +61,8 @@ class DataSource:
                                         PatientCategory.geo_level_1: 'TX_RGN_DESCR_FR',
                                         PatientCategory.geo_level_2: 'TX_PROV_DESCR_FR',
                                         PatientCategory.geo_level_3: 'TX_DESCR_FR',
-                                        PatientCategory.geo_level_3_id: 'NIS5'
+                                        PatientCategory.geo_level_3_id: 'NIS5',
+                                        PatientCategory.total: 'CASES'
                                 }
                         ),
                         FileInformation(
