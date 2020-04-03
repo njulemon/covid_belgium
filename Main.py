@@ -15,8 +15,8 @@ if __name__ == "__main__":
     ax_plotter = AxesPlotter(dao)
 
     # try to plot death
-    ax_plotter.plot(ax, PlotPattern.deat, cumsum=True)
+    ax_plotter.plot(ax, PlotPattern.death_country, cumsum=True, log=False)
+
+    fig.autofmt_xdate()
 
     plt.show()
-
-    a = 3
