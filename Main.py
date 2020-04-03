@@ -15,7 +15,7 @@ if __name__ == "__main__":
     ax_plotter = AxesPlotter(dao)
 
     # try to plot death
-    ax_plotter.plot(ax, PlotPattern.death_by_day_age, cumsum=True)
+    ax_plotter.plot(ax, PlotPattern.deat, cumsum=True)
 
     plt.show()
 

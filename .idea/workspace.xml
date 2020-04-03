@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bab23968-e777-4f9e-804c-ffd806b2ba5f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/nicolas_julemont.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AxesPlotter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataAccessObject.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccessObject.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataSource.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataSource.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AxesPlotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/AxesPlotter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +80,7 @@
       <updated>1585818945791</updated>
       <workItem from="1585818951564" duration="7351000" />
       <workItem from="1585826913394" duration="3831000" />
-      <workItem from="1585905367503" duration="4138000" />
+      <workItem from="1585905367503" duration="4679000" />
     </task>
     <servers />
   </component>
@@ -103,22 +100,22 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1440" height="438" key="DebuggerActiveHint/-1920.-180.1920.1080/0.0.1440.900@0.0.1440.900" timestamp="1585908095311" />
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1585909533104">
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1585909641601">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom/-1920.-180.1920.1080/0.0.1440.900@0.0.1440.900" timestamp="1585909533104" />
-    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1585909533102">
+    <state width="1398" height="245" key="GridCell.Tab.0.bottom/-1920.-180.1920.1080/0.0.1440.900@0.0.1440.900" timestamp="1585909641601" />
+    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1585909641599">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.center/-1920.-180.1920.1080/0.0.1440.900@0.0.1440.900" timestamp="1585909533102" />
-    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1585909533102">
+    <state width="1398" height="245" key="GridCell.Tab.0.center/-1920.-180.1920.1080/0.0.1440.900@0.0.1440.900" timestamp="1585909641599" />
+    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1585909641598">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.left/-1920.-180.1920.1080/0.0.1440.900@0.0.1440.900" timestamp="1585909533102" />
-    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1585909533103">
+    <state width="1398" height="245" key="GridCell.Tab.0.left/-1920.-180.1920.1080/0.0.1440.900@0.0.1440.900" timestamp="1585909641598" />
+    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1585909641600">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.right/-1920.-180.1920.1080/0.0.1440.900@0.0.1440.900" timestamp="1585909533103" />
+    <state width="1398" height="245" key="GridCell.Tab.0.right/-1920.-180.1920.1080/0.0.1440.900@0.0.1440.900" timestamp="1585909641600" />
     <state width="1398" height="303" key="GridCell.Tab.1.bottom" timestamp="1585909446025">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -149,6 +146,10 @@
     <state width="485" height="500" key="javadoc.popup.new/-1920.-157.1920.1057/0.0.1440.900@0.0.1440.900" timestamp="1585819118419" />
     <state width="485" height="500" key="javadoc.popup.new/-1920.-157.1920.1057/0.23.1440.877@0.23.1440.877" timestamp="1585826478548" />
     <state width="485" height="500" key="javadoc.popup.new/-1920.-180.1920.1080/0.0.1440.900@0.0.1440.900" timestamp="1585908926052" />
+    <state x="482" y="90" key="refactoring.ChangeSignatureDialog" timestamp="1585909690269">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="482" y="90" key="refactoring.ChangeSignatureDialog/-1920.-180.1920.1080/0.0.1440.900@0.0.1440.900" timestamp="1585909690269" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -159,13 +160,8 @@
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/DataAccessObject.py</url>
-          <line>60</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/AxesPlotter.py</url>
-          <line>36</line>
+          <line>57</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>

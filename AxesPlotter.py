@@ -6,24 +6,45 @@ from Enums import PatientCase, PatientCategory
 
 
 class PlotPattern(Enum):
-    death_by_day_country = auto()
-    death_by_day_age = auto()
+    """
+    This class should be thought as all available plots.
+    It defines the variable you want to plot (dead, positive tested, ...) and optionally a category if you want to
+    split the data in this category.
+    """
+    death_country = auto()
+    death_age = auto()
 
     def get_pattern(self):
+        """
+        Allows to get the information needed to plot the item you selected (item of the enum).
+        :return:
+        """
         dic = {
-                self.death_by_day_country: [PatientCase.death, None],
-                self.death_by_day_age: [PatientCase.death, PatientCategory.age]
+                self.death_country: [PatientCase.death, None],
+                self.death_age: [PatientCase.death, PatientCategory.age],
+                self.death_sex: [PatientCase.death, PatientCategory.sex]
         }
 
         return dic[self]
 
 
 class AxesPlotter:
+    """
+    This class allows to plot on an axes the data following the pattern of PlotPattern.
+    It needs a data access object (which depends on the country) to access the data AND a plotPattern.
+    """
 
     def __init__(self, dao: DataAccessObject):
         self.dao = dao
 
     def plot(self, ax: Axes, plot_pattern: PlotPattern, cumsum: bool = False):
+        """
+        Plot the data on the provided axis.
+        :param ax: The axis you want to plot on.
+        :param plot_pattern: the type of data you want to plot.
+        :param cumsum: Day by day or cumulative sum [default = False]
+        :return:
+        """
 
         # get data
         data_ = self.dao.get_cases_for(plot_pattern.get_pattern()[0], plot_pattern.get_pattern()[1])
