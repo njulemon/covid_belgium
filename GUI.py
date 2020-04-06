@@ -35,15 +35,21 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.list_select_case = QtWidgets.QListWidget()
         self.list_select_category = QtWidgets.QListWidget()
 
+        # buttons
+        self.plot_button = QtWidgets.QPushButton('Plot')
+
+        # check box
+        self.check_cumsum = QtWidgets.QCheckBox('Cumulative sum')
+        self.check_log = QtWidgets.QCheckBox('Log plot')
+
         # widget size
         width = 200
         self.list_select_country.setMaximumWidth(width)
         self.list_select_case.setMaximumWidth(width)
         self.list_select_category.setMaximumWidth(width)
-
-        # buttons
-        self.plot_button = QtWidgets.QPushButton('Plot')
         self.plot_button.setMaximumWidth(width)
+        self.check_cumsum.setMaximumWidth(width)
+        self.check_log.setMaximumWidth(width)
 
         # fill the lists.
         for country in Country:
@@ -62,6 +68,9 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         self.layout_button.addWidget(self.plot_button)
 
+        self.layout_button.addWidget(self.check_cumsum)
+        self.layout_button.addWidget(self.check_log)
+
         self.layout_button_fig.addLayout(self.layout_button)
         self.layout_button_fig.addLayout(self.layout_fig)
 
@@ -72,6 +81,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # country data.
         self.dataAO = None
         self.plotter = None
+
+    # ------------------
+    #  Events Management
+    # ------------------
 
     def select_country(self, item):
         """
@@ -116,11 +129,15 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
             self.fig_ax.clear()
             self.plotter = AxesPlotter(self.dataAO)
-            self.plotter.plot(self.fig_ax, (current_case, current_category))
+            self.plotter.plot(self.fig_ax,
+                              (current_case, current_category),
+                              cumsum=self.check_cumsum.isChecked(),
+                              log=self.check_log.isChecked())
 
             # make dates readable (rotation)
             self.fig_ax.figure.autofmt_xdate()
 
+            # repaint the figure and update the window
             self.fig_ax.figure.canvas.draw()
             self.repaint()
 
