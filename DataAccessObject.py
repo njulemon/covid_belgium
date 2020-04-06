@@ -1,4 +1,4 @@
-from typing import List, Dict
+from typing import List, Dict, Optional
 import pandas as pd
 import requests
 import io
@@ -30,7 +30,7 @@ class DataAccessObject:
             # make a dic with pandas DataFrame
             try:
                 # if this does not work you can try 'utf-8'
-                temp_data: pd.DataFrame =  pd.read_csv(io.StringIO(data_raw.decode('latin_1')))
+                temp_data: pd.DataFrame = pd.read_csv(io.StringIO(data_raw.decode('latin_1')))
             except UnicodeDecodeError:
                 print('Format is not the right one.')
             else:
@@ -42,15 +42,18 @@ class DataAccessObject:
                     self.data_dic[item.case] = list()
                 self.data_dic[item.case].append(temp_data)
 
-    def get_cases_for(self, case: PatientCase, category: PatientCategory = None) -> Dict[str, pd.DataFrame]:
+    def get_cases_for(self, case: PatientCase, category: PatientCategory = None) -> Optional[Dict[str, pd.DataFrame]]:
 
         # find the table (index) in which we can find the category asked.
         if category is not None:
-            index = 0
-            for index, table in enumerate(self.data_dic[case]):
+            index = -1
+            for ind, table in enumerate(self.data_dic[case]):
                 if category.name in table.columns:
+                    index = ind
                     continue
 
+            if index == -1:
+                return None
             current_table = self.data_dic[case][index]
         else:
             current_table = self.data_dic[case][0]

@@ -1,6 +1,6 @@
 from matplotlib.figure import Figure
 
-from AxesPlotter import AxesPlotter, PlotPattern
+from AxesPlotter import AxesPlotter
 from DataAccessObject import DataAccessObject
 from Enums import Country, PatientCase, PatientCategory
 import matplotlib.pyplot as plt
@@ -15,8 +15,9 @@ if __name__ == "__main__":
     ax_plotter = AxesPlotter(dao)
 
     # try to plot death
-    ax_plotter.plot(ax, PlotPattern.hospitalization_region, cumsum=True, log=False)
+    ax_plotter.plot(ax, (PatientCase.hospitalization, PatientCategory.sex), cumsum=True, log=True)
 
+    # make dates readable (rotation)
     fig.autofmt_xdate()
 
     plt.show()
