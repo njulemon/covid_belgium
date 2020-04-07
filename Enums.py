@@ -8,7 +8,6 @@ class PatientCase(Enum):
     positive_to_covid = auto()
     death = auto()
     hospitalization = auto()
-    intensive_care = auto() # ICU
     hospitalization_respiratory = auto() # life support -> respiratory
     hospitalization_ecmo = auto() # life support -> oxygenation through the skin.
     hospitalization_out_24 = auto() # patient which have left hospital in the last 24h.
@@ -16,6 +15,7 @@ class PatientCase(Enum):
 
 
 class PatientCategory(Enum):
+    country = auto()
     date = auto()
     age = auto()
     sex = auto()

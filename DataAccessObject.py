@@ -37,15 +37,21 @@ class DataAccessObject:
                 temp_data = temp_data.loc[:, [header for header in item.dic_category.values()]]
                 temp_data.columns = [univ_header.name for univ_header in item.dic_category.keys()]
 
+                # set date as date format.
+                temp_data[PatientCategory.date.name] = pd.to_datetime(temp_data[PatientCategory.date.name])
+
                 # add the dataFrame to the list for the current case.
                 if item.case not in self.data_dic.keys():
                     self.data_dic[item.case] = list()
                 self.data_dic[item.case].append(temp_data)
 
+
     def get_cases_for(self, case: PatientCase, category: PatientCategory = None) -> Optional[Dict[str, pd.DataFrame]]:
 
-        # find the table (index) in which we can find the category asked.
-        if category is not None:
+        asked_for_country: bool = category is None or category == PatientCategory.country
+
+        # find the table (index) in which we can find the category asked (country is an exception)
+        if not asked_for_country:
             index = -1
             for ind, table in enumerate(self.data_dic[case]):
                 if category.name in table.columns:
@@ -58,10 +64,10 @@ class DataAccessObject:
         else:
             current_table = self.data_dic[case][0]
 
-        if category is None:
+        if asked_for_country:
             return {'None': current_table.groupby(by=[PatientCategory.date.name]).sum()}
         else:
-            return {current_category: current_table.loc[current_table[category.name] == current_category, :].groupby(by=[PatientCategory.date.name]).sum()
+            return {current_category: current_table[current_table[category.name] == current_category].groupby(by=[PatientCategory.date.name]).sum()
                     for current_category in current_table[category.name].unique().tolist() if str(current_category) != 'nan'}
 
 

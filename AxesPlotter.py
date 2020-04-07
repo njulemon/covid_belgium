@@ -39,19 +39,19 @@ class AxesPlotter:
             label = 'Cases' if label == 'None' else label
 
             if cumsum:
-                data_to_plot = data[PatientCategory.total.name].cumsum()
+                data_to_plot = data[PatientCategory.total.name].cumsum().sort_index()
             else:
-                data_to_plot = data[PatientCategory.total.name]
+                data_to_plot = data[PatientCategory.total.name].sort_index()
+
+            # daily needs points to
+            line_style = '-' if cumsum else '-o'
 
             if log:
-                ax.semilogy(data.index, data_to_plot, label=label)
+                ax.semilogy(data.index, data_to_plot, line_style, label=label)
                 for axis in [ax.yaxis]:
                     axis.set_major_formatter(ScalarFormatter())
             else:
-                ax.plot(data.index, data_to_plot, label=label)
-
-            # grid
-            ax.grid(which='both')
+                ax.plot(data.index, data_to_plot, line_style, label=label)
 
         # make title
         cumsum_title = ' [Total Cases]' if cumsum else ' [Daily Cases]'
@@ -60,3 +60,6 @@ class AxesPlotter:
         # legend & title
         ax.legend()
         ax.set_title(title)
+
+        # grid
+        ax.grid(which='both')
