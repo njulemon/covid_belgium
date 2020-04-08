@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bab23968-e777-4f9e-804c-ffd806b2ba5f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Main_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SEIR_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dictionaries/nicolas_julemont.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/nicolas_julemont.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AxesPlotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/AxesPlotter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataAccessObject.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccessObject.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataSource.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataSource.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Enums.py" beforeDir="false" afterPath="$PROJECT_DIR$/Enums.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +138,7 @@
       <workItem from="1586164364924" duration="9033000" />
       <workItem from="1586248811821" duration="1549000" />
       <workItem from="1586250623846" duration="17000" />
-      <workItem from="1586250748341" duration="12738000" />
+      <workItem from="1586250748341" duration="14499000" />
     </task>
     <servers />
   </component>
