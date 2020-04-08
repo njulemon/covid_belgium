@@ -5,7 +5,7 @@ from matplotlib.axes import Axes
 from matplotlib.ticker import ScalarFormatter
 
 from DataAccessObject import DataAccessObject
-from Enums import PatientCase, PatientCategory
+from Enums import PatientCase, PatientCategory, DataForm
 
 
 class AxesPlotter:
@@ -28,23 +28,31 @@ class AxesPlotter:
         """
 
         # get data
-        data_ = self.dao.get_cases_for(plot_pattern[0], plot_pattern[1])
+        data_ = self.dao.get_data(plot_pattern[0], plot_pattern[1])
         if data_ is None:
             return
+
+        # check type of data (state or change of state).
+        data_form = plot_pattern[0].get_data_form
+        is_already_cum = data_form != DataForm.daily_incidence
+
+        # make title
+        title = plot_pattern[0].get_clean_str
 
         # loop to plot
         for label, data in data_.items():
 
-            # when there is only one item (all the country, no category, we must just label the data as "Cases").
-            label = 'Cases' if label == 'None' else label
+            # when there is only one item (all the country, no category, we must just label the data as 'Country').
+            label = self.dao.country.name.capitalize() if label == 'None' else label
+            label = title + ' - ' + label
 
-            if cumsum:
+            if cumsum and not is_already_cum:
                 data_to_plot = data[PatientCategory.total.name].cumsum().sort_index()
             else:
                 data_to_plot = data[PatientCategory.total.name].sort_index()
 
             # daily needs points to
-            line_style = '-' if cumsum else '-o'
+            line_style = '-o' if cumsum else '-o'
 
             if log:
                 ax.semilogy(data.index, data_to_plot, line_style, label=label)
@@ -53,13 +61,8 @@ class AxesPlotter:
             else:
                 ax.plot(data.index, data_to_plot, line_style, label=label)
 
-        # make title
-        cumsum_title = ' [Total Cases]' if cumsum else ' [Daily Cases]'
-        title = plot_pattern[0].name + cumsum_title
-
-        # legend & title
+        # legend
         ax.legend()
-        ax.set_title(title)
 
         # grid
         ax.grid(which='both')

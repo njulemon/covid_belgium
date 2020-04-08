@@ -6,7 +6,10 @@ from Enums import Country, PatientCase, PatientCategory
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
-    dao = DataAccessObject(Country.belgium)
+    """
+    Only for debug purpose.
+    """
+    dao = DataAccessObject(Country.france)
 
     # figure
     fig, ax = plt.subplots(figsize=(10, 7))
@@ -15,7 +18,7 @@ if __name__ == "__main__":
     ax_plotter = AxesPlotter(dao)
 
     # try to plot death
-    ax_plotter.plot(ax, (PatientCase.hospitalization, PatientCategory.sex), cumsum=True, log=True)
+    ax_plotter.plot(ax, (PatientCase.hospitalization_total, PatientCategory.country), cumsum=False, log=True)
 
     # make dates readable (rotation)
     fig.autofmt_xdate()

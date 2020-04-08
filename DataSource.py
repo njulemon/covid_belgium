@@ -12,6 +12,8 @@ class FileInformation:
     You can have several files with the same PatientCase !
     """
 
+    exclusion_list_real_category = [PatientCategory.date, PatientCategory.total]
+
     def __init__(self, http_file: str, case: PatientCase, dic_category: Dict[PatientCategory, str]):
 
         # contains the http link to the file.
@@ -23,6 +25,13 @@ class FileInformation:
         # contains the category contained in this file for this case (you can have several files with the same case,
         # but several different categories). This has been done to keep data anonymous.
         self.dic_category: Dict[PatientCategory, str] = dic_category
+
+    def get_case(self):
+        return self.case
+
+    def get_real_category(self):
+        return [category for category in self.dic_category.keys()
+                if category not in FileInformation.exclusion_list_real_category]
 
 
 class DataSource:
@@ -43,7 +52,7 @@ class DataSource:
                 Country.belgium: [
                         FileInformation(
                                 'https://epistat.sciensano.be/Data/COVID19BE_CASES_AGESEX.csv',
-                                PatientCase.positive_to_covid,
+                                PatientCase.positive_to_covid_daily,
                                 {
                                         PatientCategory.date: 'DATE',
                                         PatientCategory.geo_level_1: 'REGION',
@@ -55,19 +64,18 @@ class DataSource:
                         ),
                         FileInformation(
                                 'https://epistat.sciensano.be/Data/COVID19BE_CASES_MUNI.csv',
-                                PatientCase.positive_to_covid,
+                                PatientCase.positive_to_covid_daily,
                                 {
                                         PatientCategory.date: 'DATE',
                                         PatientCategory.geo_level_1: 'TX_RGN_DESCR_FR',
                                         PatientCategory.geo_level_2: 'TX_PROV_DESCR_FR',
                                         PatientCategory.geo_level_3: 'TX_DESCR_FR',
-                                        PatientCategory.geo_level_3_id: 'NIS5',
                                         PatientCategory.total: 'CASES'
                                 }
                         ),
                         FileInformation(
                                 'https://epistat.sciensano.be/Data/COVID19BE_HOSP.csv',
-                                PatientCase.hospitalization,
+                                PatientCase.hospitalization_daily_prevalence,
                                 {
                                         PatientCategory.date: 'DATE',
                                         PatientCategory.geo_level_1: 'REGION',
@@ -77,7 +85,7 @@ class DataSource:
                         ),
                         FileInformation(
                                 'https://epistat.sciensano.be/Data/COVID19BE_HOSP.csv',
-                                PatientCase.hospitalization_respiratory,
+                                PatientCase.hospitalization_respiratory_daily_prevalence,
                                 {
                                         PatientCategory.date: 'DATE',
                                         PatientCategory.geo_level_1: 'REGION',
@@ -87,7 +95,7 @@ class DataSource:
                         ),
                         FileInformation(
                                 'https://epistat.sciensano.be/Data/COVID19BE_HOSP.csv',
-                                PatientCase.hospitalization_ecmo,
+                                PatientCase.hospitalization_ecmo_daily_prevalence,
                                 {
                                         PatientCategory.date: 'DATE',
                                         PatientCategory.geo_level_1: 'REGION',
@@ -97,13 +105,35 @@ class DataSource:
                         ),
                         FileInformation(
                                 'https://epistat.sciensano.be/Data/COVID19BE_MORT.csv',
-                                PatientCase.death,
+                                PatientCase.death_daily,
                                 {
                                         PatientCategory.date: 'DATE',
                                         PatientCategory.geo_level_1: 'REGION',
                                         PatientCategory.sex: 'SEX',
                                         PatientCategory.age: 'AGEGROUP',
                                         PatientCategory.total: 'DEATHS'
+                                }
+                        )
+                ],
+                Country.france: [
+                        FileInformation(
+                                'https://www.data.gouv.fr/fr/datasets/r/b4ea7b4b-b7d1-4885-a099-71852291ff20',
+                                PatientCase.positive_to_covid_daily,
+                                {
+                                        PatientCategory.date: 'jour',
+                                        PatientCategory.geo_level_1: 'dep',
+                                        PatientCategory.age: 'clage_covid',
+                                        PatientCategory.total: 'nb_pos'
+                                }
+                        ),
+                        FileInformation(
+                                'https://www.data.gouv.fr/fr/datasets/r/63352e38-d353-4b54-bfd1-f1b3ee1cabd7',
+                                PatientCase.hospitalization_ecmo_daily_prevalence,
+                                {
+                                        PatientCategory.date: 'jour',
+                                        PatientCategory.geo_level_1: 'dep',
+                                        PatientCategory.sex: 'sexe',
+                                        PatientCategory.total: 'hosp'
                                 }
                         )
                 ]

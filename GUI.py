@@ -1,4 +1,5 @@
 import sys
+from typing import List
 
 from matplotlib.backends.qt_compat import QtCore, QtWidgets
 from matplotlib.backends.backend_qt5agg import (FigureCanvas, NavigationToolbar2QT as NavigationToolbar)
@@ -7,7 +8,18 @@ from matplotlib.figure import Figure
 
 from AxesPlotter import AxesPlotter
 from DataAccessObject import DataAccessObject
-from Enums import Country, PatientCase, PatientCategory
+from Enums import Country, PatientCase, PatientCategory, DataForm
+
+
+def unique_list(l: List):
+    list_unique = []
+    for item in l:
+        if item not in list_unique:
+            list_unique.append(item)
+
+    return list_unique
+
+
 
 
 class ApplicationWindow(QtWidgets.QMainWindow):
@@ -37,6 +49,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # buttons
         self.plot_button = QtWidgets.QPushButton('Plot')
+        self.clear_button = QtWidgets.QPushButton('Clear Figure')
+        self.clear_and_plot_button = QtWidgets.QPushButton('Clear and Plot')
 
         # check box
         self.check_cumsum = QtWidgets.QCheckBox('Cumulative sum')
@@ -48,6 +62,8 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         self.list_select_case.setMaximumWidth(width)
         self.list_select_category.setMaximumWidth(width)
         self.plot_button.setMaximumWidth(width)
+        self.clear_button.setMaximumWidth(width)
+        self.clear_and_plot_button.setMaximumWidth(width)
         self.check_cumsum.setMaximumWidth(width)
         self.check_log.setMaximumWidth(width)
 
@@ -55,18 +71,14 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         for country in Country:
             self.list_select_country.addItem(QtWidgets.QListWidgetItem(country.name))
 
-        for case in PatientCase:
-            self.list_select_case.addItem(QtWidgets.QListWidgetItem(case.name))
-
-        for category in PatientCategory:
-            self.list_select_category.addItem(QtWidgets.QListWidgetItem(category.name))
-
         # add widgets to the layouts.
         self.layout_button.addWidget(self.list_select_country)
         self.layout_button.addWidget(self.list_select_case)
         self.layout_button.addWidget(self.list_select_category)
 
         self.layout_button.addWidget(self.plot_button)
+        self.layout_button.addWidget(self.clear_button)
+        self.layout_button.addWidget(self.clear_and_plot_button)
 
         self.layout_button.addWidget(self.check_cumsum)
         self.layout_button.addWidget(self.check_log)
@@ -76,7 +88,10 @@ class ApplicationWindow(QtWidgets.QMainWindow):
 
         # map(action -> method)
         self.list_select_country.itemClicked.connect(self.select_country)
+        self.list_select_case.itemClicked.connect(self.select_case)
         self.plot_button.clicked.connect(self.plot)
+        self.clear_button.clicked.connect(self.clear_fig)
+        self.clear_and_plot_button.clicked.connect(self.clear_and_plot)
 
         # country data.
         self.dataAO = None
@@ -103,6 +118,38 @@ class ApplicationWindow(QtWidgets.QMainWindow):
         # change the data access object
         self.dataAO = DataAccessObject(country_selected)
 
+        # update list of cases available for the country
+        list_cases = unique_list(self.dataAO.get_cases_available())
+
+        # clear list of cases and category
+        self.list_select_case.clear()
+        self.list_select_category.clear()
+
+        # populate the cases list with available case for this country
+        for case in list_cases:
+            self.list_select_case.addItem(QtWidgets.QListWidgetItem(case.name))
+
+    def select_case(self, item):
+
+        # clear old list
+        self.list_select_category.clear()
+
+        # look for the choice of the case
+        case_selected = None
+        for case in PatientCase:
+            if case.name == self.list_select_case.currentItem().text():
+                case_selected = case
+
+        # get the list of categories for current case and country.
+        list_category = self.dataAO.get_categories_available_for_case(case_selected)
+
+        # add country to the list
+        self.list_select_category.addItem(QtWidgets.QListWidgetItem(PatientCategory.country.name))
+
+        # populate list with available category
+        for category in list_category:
+            self.list_select_category.addItem(QtWidgets.QListWidgetItem(category.name))
+
     def plot(self):
         """
         When clicked on the plot button.
@@ -127,7 +174,7 @@ class ApplicationWindow(QtWidgets.QMainWindow):
                     current_category = category
                     continue
 
-            self.fig_ax.clear()
+            # plot figure.
             self.plotter = AxesPlotter(self.dataAO)
             self.plotter.plot(self.fig_ax,
                               (current_case, current_category),
@@ -137,9 +184,29 @@ class ApplicationWindow(QtWidgets.QMainWindow):
             # make dates readable (rotation)
             self.fig_ax.figure.autofmt_xdate()
 
+            # if already cumsum (original data) -> check the box
+            if current_case.get_data_form != DataForm.daily_incidence:
+                self.check_cumsum.setChecked(True)
+
             # repaint the figure and update the window
             self.fig_ax.figure.canvas.draw()
             self.repaint()
+
+    def clear_fig(self):
+        """
+        to clear the figure.
+        :return:
+        """
+        # clear the axes.
+        self.fig_ax.clear()
+
+        # repaint the figure and update the window
+        self.fig_ax.figure.canvas.draw()
+        self.repaint()
+
+    def clear_and_plot(self):
+        self.clear_fig()
+        self.plot()
 
 
 if __name__ == "__main__":
