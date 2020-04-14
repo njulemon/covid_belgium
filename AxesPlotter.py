@@ -40,7 +40,10 @@ class AxesPlotter:
         title = plot_pattern[0].get_clean_str
 
         # loop to plot
-        for label, data in data_.items():
+        for label, data in sorted(data_.items(), key=lambda x: x[0], reverse=True):
+
+            # label = key
+            # data = data_[key]
 
             # when there is only one item (all the country, no category, we must just label the data as 'Country').
             label = self.dao.country.name.capitalize() if label == 'None' else label

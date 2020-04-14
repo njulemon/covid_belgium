@@ -20,8 +20,6 @@ def unique_list(l: List):
     return list_unique
 
 
-
-
 class ApplicationWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
