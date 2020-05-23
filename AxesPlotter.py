@@ -44,7 +44,7 @@ class AxesPlotter:
 
             # when there is only one item (all the country, no category, we must just label the data as 'Country').
             label = self.dao.country.name.capitalize() if label == 'None' else label
-            label = title + ' - ' + label
+            label = title + ' - ' + str(label)
 
             if cumsum and not is_already_cum:
                 data_to_plot = data[PatientCategory.total.name].cumsum().sort_index()

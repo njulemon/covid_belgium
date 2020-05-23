@@ -1,4 +1,5 @@
 from enum import Enum, auto
+from typing import Dict
 
 
 class Country(bytes, Enum):
@@ -27,10 +28,11 @@ class PatientCase(Enum):
     death_cumsum = (4, DataForm.cumsum)
     hospitalization_daily_prevalence = (5, DataForm.daily_prevalence)
     hospitalization_daily_incidence = (6, DataForm.daily_incidence)
-    hospitalization_respiratory_daily_prevalence = (7, DataForm.daily_prevalence)   # hosp life support -> respiratory
-    hospitalization_respiratory_daily_incidence = (8, DataForm.daily_incidence)     # hosp life support -> respiratory
-    hospitalization_ecmo_daily_prevalence = (9, DataForm.daily_prevalence)          # life support ->  external oxygenation.
-    hospitalization_out_daily_incidence = (10, DataForm.daily_incidence)             # patient which have left hospital.
+    hospitalization_cumsum = (7, DataForm.cumsum)
+    hospitalization_respiratory_daily_prevalence = (8, DataForm.daily_prevalence)   # hosp life support -> respiratory
+    hospitalization_respiratory_daily_incidence = (9, DataForm.daily_incidence)     # hosp life support -> respiratory
+    hospitalization_ecmo_daily_prevalence = (10, DataForm.daily_prevalence)          # life support ->  external oxygenation.
+    hospitalization_out_daily_incidence = (11, DataForm.daily_incidence)             # patient which have left hospital.
     test_number_daily = (12, DataForm.daily_incidence)
     test_number_cumsum = (13, DataForm.cumsum)
 
@@ -48,7 +50,7 @@ class PatientCase(Enum):
         Capitalize the name of the enum.
         :return:
         """
-        return ' '.join([item.capitalize() for item in self.name.split('_')])
+        return self.name.split('_')[0].capitalize()
 
 
 class PatientCategory(Enum):
@@ -61,3 +63,13 @@ class PatientCategory(Enum):
     geo_level_3 = auto()  # for example, the district
     geo_level_3_id = auto()
     total = auto()  # the total this category or this country.
+
+
+class UnifiedStatistic(Enum):
+
+    death_24 = auto()
+    death_cumsum = auto()
+    hospitalized = auto()
+    intensive_care = auto()
+    positive_24 = auto()
+    positive_cumsum = auto()

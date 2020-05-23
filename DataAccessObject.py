@@ -4,7 +4,7 @@ import requests
 import io
 
 from DataSource import FileInformation, DataSource
-from Enums import Country, PatientCase, PatientCategory, DataForm
+from Enums import Country, PatientCase, PatientCategory, DataForm, UnifiedStatistic
 
 
 class DataAccessObject:
@@ -46,7 +46,7 @@ class DataAccessObject:
                     self.data_dic[item.case] = list()
                 self.data_dic[item.case].append(temp_data)
 
-    def get_data(self, case: PatientCase, category: PatientCategory = None) -> Optional[Dict[str, pd.DataFrame]]:
+    def get_data(self, case: UnifiedStatistic, category: PatientCategory = None) -> Optional[Dict[str, pd.DataFrame]]:
         """
         Return the data available for the (case, category).
         :param case:
@@ -96,11 +96,6 @@ class DataAccessObject:
                                 if file_info.get_case() == case]
         list_categories = [category for categories in list_list_categories for category in categories]
         return list_categories
-
-    def get_data_form(self, case: PatientCase, category: PatientCategory = None) -> DataForm:
-
-        asked_for_country: bool = category is None or category == PatientCategory.country
-
 
 
 

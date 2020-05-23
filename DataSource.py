@@ -2,7 +2,8 @@ from collections import namedtuple
 from enum import Enum, auto
 from typing import List, Dict
 
-from Enums import PatientCase, PatientCategory, Country
+from Enums import PatientCase, PatientCategory, Country, UnifiedStatistic
+import pandas as pd
 
 
 class FileInformation:
@@ -15,7 +16,6 @@ class FileInformation:
     exclusion_list_real_category = [PatientCategory.date, PatientCategory.total]
 
     def __init__(self, http_file: str, case: PatientCase, dic_category: Dict[PatientCategory, str]):
-
         # contains the http link to the file.
         self.http_file: str = http_file
 
@@ -49,6 +49,8 @@ class DataSource:
         """
 
         connection_object_dic: Dict[Country, List[FileInformation]] = {
+
+                # BELGIUM
                 Country.belgium: [
                         FileInformation(
                                 'https://epistat.sciensano.be/Data/COVID19BE_CASES_AGESEX.csv',
@@ -115,6 +117,8 @@ class DataSource:
                                 }
                         )
                 ],
+
+                # FRANCE
                 Country.france: [
                         FileInformation(
                                 'https://www.data.gouv.fr/fr/datasets/r/b4ea7b4b-b7d1-4885-a099-71852291ff20',
@@ -128,15 +132,31 @@ class DataSource:
                         ),
                         FileInformation(
                                 'https://www.data.gouv.fr/fr/datasets/r/63352e38-d353-4b54-bfd1-f1b3ee1cabd7',
-                                PatientCase.hospitalization_ecmo_daily_prevalence,
+                                PatientCase.hospitalization_cumsum,
                                 {
                                         PatientCategory.date: 'jour',
                                         PatientCategory.geo_level_1: 'dep',
                                         PatientCategory.sex: 'sexe',
                                         PatientCategory.total: 'hosp'
                                 }
+                        ),
+                        FileInformation(
+                                'https://www.data.gouv.fr/fr/datasets/r/63352e38-d353-4b54-bfd1-f1b3ee1cabd7',
+                                PatientCase.death_cumsum,
+                                {
+                                        PatientCategory.date: 'jour',
+                                        PatientCategory.geo_level_1: 'dep',
+                                        PatientCategory.sex: 'sexe',
+                                        PatientCategory.total: 'dc'
+                                }
                         )
                 ]
         }
 
         return connection_object_dic[country]
+
+    def get_stat_for_country(self, stat_name: UnifiedStatistic):
+
+        dic: Dict[PatientCategory, pd.DataFrame] = {
+                
+        }
